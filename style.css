@@ -1,0 +1,204 @@
+/* Web estática del canal (SPEC §11).
+   Sin fuentes externas, sin JS y sin CDN: la página carga entera desde
+   GitHub Pages y no depende de que un tercero siga en pie. El tráfico llega
+   desde el enlace de la bio, así que está pensada primero para móvil. */
+
+:root {
+  --bg: #0e1016;
+  --panel: #171a23;
+  --panel-hover: #1f232f;
+  --text: #e8eaf0;
+  --muted: #9aa1b4;
+  --accent: #ffd23f;
+  --line: #262b38;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f7fa;
+    --panel: #ffffff;
+    --panel-hover: #f0f2f7;
+    --text: #15181f;
+    --muted: #5b6377;
+    --accent: #b07f00;
+    --line: #e2e5ed;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: inherit; }
+
+main, .top, footer {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* --- Cabecera --- */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.top nav { display: flex; gap: 18px; }
+.top nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+.top nav a:hover { color: var(--accent); }
+
+/* --- Portada --- */
+
+.intro h1 { font-size: 1.9rem; margin: 0 0 8px; line-height: 1.2; }
+.intro p { color: var(--muted); max-width: 60ch; margin: 0 0 8px; }
+
+/* El eslogan es la marca: va en el color de acento, no en gris. */
+.tagline { color: var(--accent) !important; font-weight: 600; font-size: 1.1rem; margin: 0 0 12px; }
+
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.card a { text-decoration: none; display: block; height: 100%; }
+.card:hover { background: var(--panel-hover); border-color: var(--accent); }
+.card img { width: 100%; height: auto; display: block; background: var(--line); }
+.card-body { padding: 14px 16px 18px; }
+.card h2 { font-size: 1.05rem; margin: 0 0 4px; }
+
+.meta { color: var(--muted); font-size: 0.9rem; margin: 0 0 10px; }
+.blurb { margin: 0; font-size: 0.95rem; }
+
+/* En la tarjeta el blurb es un aperitivo, no el texto: a tres líneas. El texto
+   entero está en la página del juego. */
+.card .blurb {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.blurb.big { font-size: 1.1rem; margin: 20px 0; }
+.empty { color: var(--muted); }
+
+/* --- Página de juego --- */
+
+.game h1 { font-size: 1.8rem; margin: 0 0 6px; line-height: 1.2; }
+
+.video {
+  position: relative;
+  /* Shorts es 9:16: reservar la proporción evita que la página salte al cargar. */
+  aspect-ratio: 9 / 16;
+  max-width: 340px;
+  margin: 20px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+}
+
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.hero { width: 100%; height: auto; border-radius: var(--radius); margin: 20px 0; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 18px 0; }
+.tags span {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 3px 11px;
+  font-size: 0.82rem;
+}
+
+.buttons { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+
+.button {
+  display: inline-block;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 18px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.button:hover { border-color: var(--accent); color: var(--accent); }
+
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #15181f;
+}
+
+.button.primary:hover { filter: brightness(1.1); color: #15181f; }
+
+.back { margin-top: 32px; }
+
+/* --- Página de enlaces --- */
+
+.links h1 { font-size: 1.7rem; margin: 0 0 6px; }
+.link-list { list-style: none; padding: 0; margin: 24px 0; display: grid; gap: 10px; }
+
+.link-row {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 18px;
+  text-decoration: none;
+}
+
+.link-row:hover { background: var(--panel-hover); border-color: var(--accent); }
+.link-row span { color: var(--muted); font-size: 0.88rem; }
+.channels .link-row { text-align: center; align-items: center; }
+.link-row.support { border-color: var(--accent); }
+.section { font-size: 1rem; color: var(--muted); font-weight: 600; margin: 32px 0 0; }
+
+/* --- Pie --- */
+
+footer {
+  border-top: 1px solid var(--line);
+  margin-top: 56px;
+  padding-top: 20px;
+  padding-bottom: 48px;
+}
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 14px; font-size: 0.9rem; }
+.footer-links a { color: var(--muted); text-decoration: none; }
+.footer-links a:hover { color: var(--accent); }
+
+.small, .disclosure { color: var(--muted); font-size: 0.83rem; margin: 0 0 8px; }
+.disclosure { color: var(--text); }
